@@ -5,40 +5,40 @@
 
 using namespace Helper;
 
+int Snake::count_eaten_apples = 0;
+
 Snake::Snake(QObject *parent) :
     QObject(parent),
     QGraphicsItem(),
-    snakeSize(-16, -16, 16, 16)
+    m_size(-8, -8, 16, 16)
 {
     this->setRotation(0);
     this->setPos(RoomBase::PLAYING_FIELD[16][16]);
+    //this->setPos(0,0);
 }
 
 Snake::~Snake()
 {
-
 }
 
 void Snake::gameOver()
 {
-    //emit signal_gameOver();
+    emit signal_gameOver();
 }
 
 QRectF Snake::boundingRect() const
 {
-    return snakeSize;
+    return m_size;
 }
 
 void Snake::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-        QPolygon polygon(snakeSize);
-        painter->setBrush(Qt::red);
-        painter->drawPolygon(polygon);
+    painter->drawPixmap(m_size, QPixmap(":snake/head.png"));
 
-        Q_UNUSED(option); Q_UNUSED(widget);
+    Q_UNUSED(option); Q_UNUSED(widget);
 }
 
-void Snake::slotGameTimer()
+void Snake::slot_snakeTimer()
 {
     lastPos.clear();
     lastPos.append(QPointF(this->x(),this->y()));
@@ -63,70 +63,61 @@ void Snake::drivingDirections()
 {
     if(GetAsyncKeyState(VK_LEFT)){
         if (directionHead != DIRECTION::RIGHT)
+        {
+            this->setRotation(Angle::ANGLE_270);
             directionHead = DIRECTION::LEFT;
+        }
     }
     if(GetAsyncKeyState(VK_RIGHT)){
         if (directionHead != DIRECTION::LEFT)
+        {
+            this->setRotation(Angle::ANGLE_90);
             directionHead = DIRECTION::RIGHT;
+        }
     }
     if(GetAsyncKeyState(VK_UP)){
         if (directionHead != DIRECTION::DOWN)
+        {
+            setRotation(Angle::ANGLE_0);
             directionHead = DIRECTION::UP;
+        }
     }
     if(GetAsyncKeyState(VK_DOWN)){
         if (directionHead != DIRECTION::UP)
+        {
+            this->setRotation(Angle::ANGLE_180);
             directionHead = DIRECTION::DOWN;
+        }
     }
 }
 
 void Snake::move()
 {
-    switch (directionHead) {
-        case DIRECTION::DOWN:
-        {
-            this->setPos(mapToParent(0, FIELD_SIZE));
-            break;
-        }
-        case DIRECTION::UP:
-        {
-            this->setPos(mapToParent(0, -FIELD_SIZE));
-            break;
-        }
-        case DIRECTION::LEFT:
-        {
-            this->setPos(mapToParent(-FIELD_SIZE, 0));
-            break;
-        }
-        case DIRECTION::RIGHT:
-        {
-            this->setPos(mapToParent(FIELD_SIZE, 0));
-            break;
-        }
-    }
+    this->setPos(mapToParent(0, -FIELD_SIZE));
 }
 
 void Snake::checkWall()
 {
-    if(this->x() - FIELD_SIZE < BORDER_MIN_X){
+    if(this->x() - FIELD_HALF_SIZE < BORDER_MIN_X){
         gameOver();
-        this->setX(BORDER_MIN_X + FIELD_SIZE);  // слева
+        this->setX(BORDER_MIN_X + FIELD_HALF_SIZE);     // слева
     }
-    if(this->x() + FIELD_SIZE > BORDER_MAX_X){
+    if(this->x() + FIELD_HALF_SIZE > BORDER_MAX_X){
         gameOver();
-        this->setX(BORDER_MAX_X);               // справа
+        this->setX(BORDER_MAX_X - FIELD_HALF_SIZE);     // справа
     }
-    if(this->y() - FIELD_SIZE < BORDER_MIN_Y){
+    if(this->y() - FIELD_HALF_SIZE < BORDER_MIN_Y){
         gameOver();
-        this->setY(BORDER_MIN_Y + FIELD_SIZE);  // сверху
+        this->setY(BORDER_MIN_Y + FIELD_HALF_SIZE);     // сверху
     }
-    if(this->y() + FIELD_SIZE > BORDER_MAX_Y){
+    if(this->y() + FIELD_HALF_SIZE > BORDER_MAX_Y){
         gameOver();
-        this->setY(BORDER_MAX_Y);               // снизу
+        this->setY(BORDER_MAX_Y - FIELD_HALF_SIZE);     // снизу
     }
 }
 
 void Snake::collision()
-{
+{        
     QList<QGraphicsItem *> list = this->collidingItems();
     foreach(QGraphicsItem *item , list)
     {
@@ -135,6 +126,8 @@ void Snake::collision()
             {
                 this->scene()->removeItem(item);
                 delete item;
+
+                count_eaten_apples++;
 
                 addDot();
 
@@ -146,9 +139,8 @@ void Snake::collision()
                 while ( dots.lastIndexOf(item) > 0 )
                 {
                     this->scene()->removeItem(dots.last());
-                    dots.removeOne(dots.last());
                     delete dots.last();
-                    dots.removeAt(dots.indexOf(dots.last()));
+                    dots.removeOne(dots.last());
                 }
                 break;
             }
@@ -158,7 +150,7 @@ void Snake::collision()
 
 void Snake::addDot()
 {
-    Dot *dot = new Dot();
+    Dot *dot = new Dot(dots.isEmpty() ? this : dots.last());
     this->scene()->addItem(dot);
     dot->setPos(lastPos.last());
     dots.append(dot);

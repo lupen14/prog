@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/snake">
+        <file>head.png</file>
+        <file>dot_direct.png</file>
+        <file>dot_angle.png</file>
+        <file>dot_tail.png</file>
+    </qresource>
+</RCC>

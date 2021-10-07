@@ -8,11 +8,12 @@ using namespace Helper;
 Apple::Apple(QObject *parent) :
     QObject(parent),
     QGraphicsItem(),
-    appleSize(-16, -16, 16, 16)
+    m_size(-8, -8, 16, 16)
 {
     setRotation(0);
     srand(static_cast<unsigned int>(time(0)));
     setPos(RoomBase::PLAYING_FIELD[rand()%FIELD_SIZE_X][rand()%FIELD_SIZE_Y]);
+    //setPos(RoomBase::PLAYING_FIELD[15][15]);
 }
 
 Apple::~Apple()
@@ -22,14 +23,12 @@ Apple::~Apple()
 
 QRectF Apple::boundingRect() const
 {
-    return appleSize;
+    return m_size;
 }
 
 void Apple::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    QPolygon polygon(appleSize);
-    painter->setBrush(Qt::green);
-    painter->drawPolygon(polygon);
+    painter->drawPixmap(m_size, QPixmap("apple.png"));
 
     Q_UNUSED(option); Q_UNUSED(widget);
 }

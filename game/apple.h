@@ -2,7 +2,7 @@
 #define APPLE_H
 
 #include <QObject>
-#include <QGraphicsItem>
+#include <QGraphicsPixmapItem>
 #include <QPainter>
 
 class Apple : public QObject, public QGraphicsItem
@@ -21,7 +21,7 @@ signals:
    void signal_die(Apple*);
 
 private:
-   QRect appleSize;
+   QRect m_size;
 
 };
 

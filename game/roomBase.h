@@ -21,14 +21,34 @@ public:
 
     static QPointF PLAYING_FIELD[FIELD_SIZE_X][FIELD_SIZE_Y];
 
+    // отрисовка сцены
+    void paintGrig();
+
+    // создание яблока
+    void createApple();
+
+    // запуск игрового таймера
+    void initGameTimer();
+
+signals:
+    void signal_roomCompleted();
+
 private slots:
+
+    // слот игрового таймера
+    void slot_gameTimer();
+
+    // слот конца игры
     void slot_gameOver();
+
+    // слот когда яблоко сьедено
     void slot_appleDie(Apple* __apple);
 
 private:
     QGraphicsScene  *m_scene;
     Snake           *m_snake;
-    QTimer          *m_timer;
+    QTimer          *m_timerSnake;
+    QTimer          *m_timerGame;
 
     // определение матрицы полей
     void creatFieldMatrix();
@@ -36,17 +56,11 @@ private:
     // отрисовка границ сцены
     void drawingSceneBoundaries();
 
-    // отрисовка сцены
-    void paintGrig();
-
-    // создание яблока
-    void createApple();
-
     // сотворяем змейке
     void createSnake();
 
-    // запуск игрового таймера
-    void initGameTimer();
+    // запуск жизни змейки
+    void initSnakeTimer();
 };
 
 #endif // ROOMBASE_H

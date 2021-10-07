@@ -17,18 +17,23 @@ public:
     Snake(QObject *parent = 0);
     ~Snake();
 
+    static int count_eaten_apples;
+
 signals:
     void signal_gameOver();
 
 public slots:
-    void slotGameTimer();
+    void slot_snakeTimer();
 
 protected:
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 private:
-    QRect snakeSize;
+    QRect m_size;
+    QList<QGraphicsItem *> dots;
+    QList<QPointF> lastPos;
+    char lastKey;
 
     // определяем направление движения головы
     void drivingDirections();
@@ -45,14 +50,8 @@ private:
     // столкновение с другими обьектами
     void collision();
 
+    // конец игры
     void gameOver();
-
-
-
-    QList<QGraphicsItem *> dots;
-    QList<QPointF> lastPos;
-    char lastKey;
-
 
     enum DIRECTION
     {

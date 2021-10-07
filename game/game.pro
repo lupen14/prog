@@ -18,19 +18,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     apple.cpp \
     dot.cpp \
-    levelgenerator.cpp \
     main.cpp \
     mainwindow.cpp \
     roomBase.cpp \
+    room_1_base.cpp \
+    roomgenerator.cpp \
     snake.cpp
 
 HEADERS += \
     apple.h \
     dot.h \
     helper.h \
-    levelgenerator.h \
     mainwindow.h \
     roomBase.h \
+    room_1_base.h \
+    roomgenerator.h \
     snake.h
 
 FORMS += \
@@ -40,3 +42,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    image.qrc

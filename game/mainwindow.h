@@ -1,7 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "levelgenerator.h"
+#include "roomgenerator.h"
 
 #include <QMainWindow>
 #include <QGraphicsScene>
@@ -21,7 +21,7 @@ public:
 
 private:
     QGraphicsScene  *scene;
-    LevelGenerator  *levelGenerator;
+    RoomGenerator   *levelGenerator;
 
     // создаем сцену
     void configuringScene();

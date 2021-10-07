@@ -1,5 +1,7 @@
 #include "roomBase.h"
 
+#include "QDebug"
+#include <QtAlgorithms>
 
 QPointF RoomBase::PLAYING_FIELD[FIELD_SIZE_X][FIELD_SIZE_Y];
 
@@ -10,13 +12,9 @@ m_scene(__scene)
 
     drawingSceneBoundaries();
 
-    paintGrig();
-
     createSnake();
 
-    createApple();
-
-    initGameTimer();
+    initSnakeTimer();
 }
 
 RoomBase::~RoomBase()
@@ -25,15 +23,17 @@ RoomBase::~RoomBase()
 
 void RoomBase::creatFieldMatrix()
 {
-    int field_x = 0;
-    for (int i = BORDER_MIN_X + FIELD_SIZE; i <= BORDER_MAX_X; i+=FIELD_SIZE) {
+    int field_x = 0;    
+    for (int i = BORDER_MIN_X; i < BORDER_MAX_X; i+=FIELD_SIZE) {
         int field_y = 0;
-        for (int j = BORDER_MIN_Y + FIELD_SIZE; j <= BORDER_MAX_Y; j+=FIELD_SIZE) {
-            PLAYING_FIELD[field_x][field_y] = QPointF(i,j);
+        for (int j = BORDER_MIN_Y; j < BORDER_MAX_Y; j+=FIELD_SIZE) {
+            PLAYING_FIELD[field_x][field_y] = QPointF(i + FIELD_HALF_SIZE, j + FIELD_HALF_SIZE);
             field_y++;
         }
         field_x++;
     }
+
+    qDebug() << RoomBase::PLAYING_FIELD[16][16];
 }
 
 void RoomBase::drawingSceneBoundaries()
@@ -68,18 +68,37 @@ void RoomBase::createApple()
     connect(apple, &Apple::signal_die, this, &RoomBase::slot_appleDie);
 }
 
+void RoomBase::initGameTimer()
+{
+    m_timerGame = new QTimer();
+    connect(m_timerGame, &QTimer::timeout, this, &RoomBase::slot_gameTimer);
+    m_timerGame->start(SPEED_GAME);
+}
+
+void RoomBase::slot_gameTimer()
+{
+    /*if (Snake::count_eaten_apples == 5)
+    {
+        m_timerSnake->stop();
+        m_timerGame->stop();
+        qDeleteAll(m_scene->items());
+        m_snake = nullptr;
+        emit signal_roomCompleted();
+    }*/
+}
+
 void RoomBase::slot_appleDie(Apple *__apple)
 {
     disconnect(__apple, &Apple::signal_die, this, &RoomBase::slot_appleDie);
-    createApple();
+    if (m_snake != nullptr)
+        createApple();
 }
 
-
-void RoomBase::initGameTimer()
+void RoomBase::initSnakeTimer()
 {
-    m_timer = new QTimer();
-    connect(m_timer, &QTimer::timeout, m_snake, &Snake::slotGameTimer);
-    m_timer->start(SPEED_GAME);
+    m_timerSnake = new QTimer();
+    connect(m_timerSnake, &QTimer::timeout, m_snake, &Snake::slot_snakeTimer);
+    m_timerSnake->start(SPEED_SNAKE);
 }
 
 void RoomBase::slot_gameOver()
