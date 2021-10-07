@@ -35,4 +35,26 @@ namespace Angle
     static const int ANGLE_270  = 270;
 }
 
+namespace Movement
+{
+    enum Direction
+    {
+        UP      = 0,
+        DOWN    = 1,
+        RIGHT   = 2,
+        LEFT    = 3,
+        ALL     = 4
+    };
+}
+
+namespace AppleFlags
+{
+    enum Flags
+    {
+        NORMAL  = 0,
+        MOVE
+    };
+
+}
+
 #endif // HELPER_H

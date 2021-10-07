@@ -2,6 +2,7 @@
 #define LEVELGENERATOR_H
 
 #include "room_1_base.h"
+#include "room_2_move_apple.h"
 
 #include <QObject>
 
@@ -16,6 +17,7 @@ public:
 private:
     QGraphicsScene      *m_scene;
     Room_1_base         *room_1;
+    Room_2_move_apple   *room_2;
     QList<RoomBase *>   rooms;
 
     // запуск первого уровня

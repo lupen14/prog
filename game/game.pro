@@ -22,6 +22,7 @@ SOURCES += \
     mainwindow.cpp \
     roomBase.cpp \
     room_1_base.cpp \
+    room_2_move_apple.cpp \
     roomgenerator.cpp \
     snake.cpp
 
@@ -32,6 +33,7 @@ HEADERS += \
     mainwindow.h \
     roomBase.h \
     room_1_base.h \
+    room_2_move_apple.h \
     roomgenerator.h \
     snake.h
 

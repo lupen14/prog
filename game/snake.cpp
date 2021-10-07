@@ -12,13 +12,22 @@ Snake::Snake(QObject *parent) :
     QGraphicsItem(),
     m_size(-8, -8, 16, 16)
 {
-    this->setRotation(0);
+    setRotation(Angle::ANGLE_0);
     this->setPos(RoomBase::PLAYING_FIELD[16][16]);
     //this->setPos(0,0);
+
+    initTimer();
 }
 
 Snake::~Snake()
 {
+}
+
+void Snake::initTimer()
+{
+    m_timer = new QTimer();
+    connect(m_timer, &QTimer::timeout, this, &Snake::slot_snakeTimer);
+    m_timer->start(SPEED_SNAKE);
 }
 
 void Snake::gameOver()
@@ -62,31 +71,31 @@ void Snake::slot_snakeTimer()
 void Snake::drivingDirections()
 {
     if(GetAsyncKeyState(VK_LEFT)){
-        if (directionHead != DIRECTION::RIGHT)
+        if (directionHead != Movement::RIGHT)
         {
             this->setRotation(Angle::ANGLE_270);
-            directionHead = DIRECTION::LEFT;
+            directionHead = Movement::LEFT;
         }
     }
     if(GetAsyncKeyState(VK_RIGHT)){
-        if (directionHead != DIRECTION::LEFT)
+        if (directionHead != Movement::LEFT)
         {
             this->setRotation(Angle::ANGLE_90);
-            directionHead = DIRECTION::RIGHT;
+            directionHead = Movement::RIGHT;
         }
     }
     if(GetAsyncKeyState(VK_UP)){
-        if (directionHead != DIRECTION::DOWN)
+        if (directionHead != Movement::DOWN)
         {
             setRotation(Angle::ANGLE_0);
-            directionHead = DIRECTION::UP;
+            directionHead = Movement::UP;
         }
     }
     if(GetAsyncKeyState(VK_DOWN)){
-        if (directionHead != DIRECTION::UP)
+        if (directionHead != Movement::UP)
         {
             this->setRotation(Angle::ANGLE_180);
-            directionHead = DIRECTION::DOWN;
+            directionHead = Movement::DOWN;
         }
     }
 }
