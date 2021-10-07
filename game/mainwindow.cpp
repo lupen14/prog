@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_widget.h"
 
+#include "Helper.h"
+
 #include <QGraphicsPixmapItem>
 
 MainWindow::MainWindow(QWidget *parent)
@@ -12,6 +14,9 @@ MainWindow::MainWindow(QWidget *parent)
     this->setFixedSize(850,870);
 
     configuringScene();
+
+    this->setWindowTitle(QString("Snake %1").arg(Helper::GAME_VERSION));
+    this->setWindowIcon(QIcon(":snake/head.png"));
 
     levelGenerator = new RoomGenerator(scene);
 }

@@ -5,6 +5,8 @@
 
 namespace Helper
 {
+    static const int GAME_VERSION   = 002;
+
     static const int SCENE_X1   = -256;
     static const int SCENE_Y1   = -256;
     static const int SCENE_X2   = 512;
