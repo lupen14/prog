@@ -25,16 +25,17 @@ public:
     void paintGrig();
 
     // создание яблока
-    void createApple();
+    virtual void createApple();
 
     // запуск игрового таймера
     void initGameTimer();
 
+    Snake* getSnake() { return m_snake;};
+
 signals:
     void signal_roomCompleted();
 
-private slots:
-
+public slots:
     // слот игрового таймера
     void slot_gameTimer();
 
@@ -42,12 +43,11 @@ private slots:
     void slot_gameOver();
 
     // слот когда яблоко сьедено
-    void slot_appleDie(Apple* __apple);
+    virtual void slot_appleDie(Apple* __apple);
 
 private:
     QGraphicsScene  *m_scene;
     Snake           *m_snake;
-    QTimer          *m_timerSnake;
     QTimer          *m_timerGame;
 
     // определение матрицы полей
@@ -58,9 +58,6 @@ private:
 
     // сотворяем змейке
     void createSnake();
-
-    // запуск жизни змейки
-    void initSnakeTimer();
 };
 
 #endif // ROOMBASE_H

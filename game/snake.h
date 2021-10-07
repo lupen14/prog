@@ -1,14 +1,15 @@
 #ifndef SNAKE_H
 #define SNAKE_H
 
+#include <windows.h>
+#include "dot.h"
+#include "apple.h"
+#include "Helper.h"
+
 #include <QObject>
 #include <QGraphicsItem>
 #include <QGraphicsScene>
 #include <QPainter>
-
-#include <windows.h>
-#include "dot.h"
-#include "apple.h"
 
 class Snake : public QObject, public QGraphicsItem
 {
@@ -22,7 +23,7 @@ public:
 signals:
     void signal_gameOver();
 
-public slots:
+private slots:
     void slot_snakeTimer();
 
 protected:
@@ -30,10 +31,8 @@ protected:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 private:
-    QRect m_size;
-    QList<QGraphicsItem *> dots;
-    QList<QPointF> lastPos;
-    char lastKey;
+    // оживляем змейку
+    void initTimer();
 
     // определяем направление движения головы
     void drivingDirections();
@@ -53,15 +52,12 @@ private:
     // конец игры
     void gameOver();
 
-    enum DIRECTION
-    {
-        UP      = 1,
-        DOWN    = 2,
-        RIGHT   = 3,
-        LEFT    = 4
-    };
-
-    DIRECTION directionHead;
+    Movement::Direction     directionHead;
+    QRect                   m_size;
+    QList<QGraphicsItem *>  dots;
+    QList<QPointF>          lastPos;
+    char                    lastKey;
+    QTimer                  *m_timer;
 };
 
 #endif // SNAKE_H

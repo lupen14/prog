@@ -13,8 +13,6 @@ m_scene(__scene)
     drawingSceneBoundaries();
 
     createSnake();
-
-    initSnakeTimer();
 }
 
 RoomBase::~RoomBase()
@@ -63,7 +61,7 @@ void RoomBase::createSnake()
 
 void RoomBase::createApple()
 {
-    Apple *apple = new Apple();
+    Apple *apple = new Apple(AppleFlags::NORMAL);
     m_scene->addItem(apple);
     connect(apple, &Apple::signal_die, this, &RoomBase::slot_appleDie);
 }
@@ -92,13 +90,6 @@ void RoomBase::slot_appleDie(Apple *__apple)
     disconnect(__apple, &Apple::signal_die, this, &RoomBase::slot_appleDie);
     if (m_snake != nullptr)
         createApple();
-}
-
-void RoomBase::initSnakeTimer()
-{
-    m_timerSnake = new QTimer();
-    connect(m_timerSnake, &QTimer::timeout, m_snake, &Snake::slot_snakeTimer);
-    m_timerSnake->start(SPEED_SNAKE);
 }
 
 void RoomBase::slot_gameOver()
