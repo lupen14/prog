@@ -3,18 +3,21 @@
 
 #include "QDebug"
 
-using namespace Helper;
+using namespace Base;
 
 int Snake::count_eaten_apples = 0;
 
 Snake::Snake(QObject *parent) :
     QObject(parent),
     QGraphicsItem(),
-    m_size(-8, -8, 16, 16)
+    m_size(-8, -8, 16, 16),
+    m_speed(5)
 {
     setRotation(Angle::ANGLE_0);
     this->setPos(RoomBase::PLAYING_FIELD[16][16]);
     //this->setPos(0,0);
+
+    this->setZValue(ItemZValue::Z_SNAKE);
 
     initTimer();
 }
@@ -23,11 +26,21 @@ Snake::~Snake()
 {
 }
 
+QRectF Snake::boundingRect() const
+{
+    return m_size;
+}
+
+int Snake::type() const
+{
+    return TYPE;
+}
+
 void Snake::initTimer()
 {
     m_timer = new QTimer();
     connect(m_timer, &QTimer::timeout, this, &Snake::slot_snakeTimer);
-    m_timer->start(SPEED_SNAKE);
+    m_timer->start((int)(1000 / m_speed));
 }
 
 void Snake::gameOver()
@@ -35,14 +48,17 @@ void Snake::gameOver()
     emit signal_gameOver();
 }
 
-QRectF Snake::boundingRect() const
+void Snake::setSnakeSpeed(snakeSpeed __speed)
 {
-    return m_size;
+
+    m_speed += __speed;
+    m_timer->start((int)(1000 / m_speed));
+    qDebug() << m_speed;
 }
 
 void Snake::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->drawPixmap(m_size, QPixmap(":snake/head.png"));
+    painter->drawPixmap(m_size, QPixmap(":snake/images/snake/head.png"));
 
     Q_UNUSED(option); Q_UNUSED(widget);
 }
@@ -131,25 +147,33 @@ void Snake::collision()
     foreach(QGraphicsItem *item , list)
     {
         switch (item->type()) {
-            case Apple::TYPE:
+            case static_cast<typeItem>(ItemType::APPLE):
             {
+                Apple *apple = static_cast<Apple*>(item);
+                addDot(apple->getMutagen());
                 this->scene()->removeItem(item);
                 delete item;
 
                 count_eaten_apples++;
 
-                addDot();
-
                 break;
             }
-            case Dot::TYPE:
+            case static_cast<typeItem>(ItemType::DOT):
             {
                 /// удаляем тело до тех пор пока не удлим с тем с котом столкнулись
                 while ( dots.lastIndexOf(item) > 0 )
                 {
-                    this->scene()->removeItem(dots.last());
-                    delete dots.last();
-                    dots.removeOne(dots.last());
+                    Dot *lastDot(static_cast<Dot*>(dots.last()));
+                    lastDot->printBload();
+                    this->scene()->removeItem(lastDot);
+                    delete lastDot;
+
+                    if (lastDot->getMutagen() == Mutagen::SPEED)
+                    {
+                        disconnect(lastDot, &Dot::signal_setSnakeSpeed, this, &Snake::slot_setSnakeSpeed);
+                    }
+
+                    dots.removeOne(lastDot);
                 }
                 break;
             }
@@ -157,10 +181,46 @@ void Snake::collision()
     }
 }
 
-void Snake::addDot()
+void Snake::addDot(const Mutagen &__mutagen)
 {
     Dot *dot = new Dot(dots.isEmpty() ? this : dots.last());
+
+    switch (__mutagen)
+    {
+        case Mutagen::NONE :
+        {
+            dot->setMutagenNone();
+            break;
+        }
+        case Mutagen::SPEED :
+        {
+            connect(dot, &Dot::signal_setSnakeSpeed, this, &Snake::slot_setSnakeSpeed);
+            dot->setMutagenSpeed();
+            break;
+        }
+        case Mutagen::ALL :
+        {
+            break;
+        }
+    }
+
     this->scene()->addItem(dot);
     dot->setPos(lastPos.last());
     dots.append(dot);
 }
+
+void Snake::slot_setSnakeSpeed(snakeSpeed __speed)
+{
+    setSnakeSpeed(__speed);
+}
+
+
+
+
+
+
+
+
+
+
+

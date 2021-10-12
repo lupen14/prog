@@ -9,7 +9,7 @@
 #include <QGraphicsScene>
 #include <QTimer>
 
-using namespace Helper;
+using namespace Base;
 
 class RoomBase : public QObject
 {
@@ -28,7 +28,16 @@ public:
     virtual void createApple();
 
     // запуск игрового таймера
-    void initGameTimer();
+    void initTimerRoom();
+
+    // сотворяем змейке
+    void createSnake();
+
+    // рисуем фон
+    void drawBackgroung();
+
+    // создаем портал
+    void createPortal();
 
     Snake* getSnake() { return m_snake;};
 
@@ -36,8 +45,8 @@ signals:
     void signal_roomCompleted();
 
 public slots:
-    // слот игрового таймера
-    void slot_gameTimer();
+    // слот таймера комнаты
+    void slot_timerRoom();
 
     // слот конца игры
     void slot_gameOver();
@@ -46,18 +55,16 @@ public slots:
     virtual void slot_appleDie(Apple* __apple);
 
 private:
-    QGraphicsScene  *m_scene;
-    Snake           *m_snake;
-    QTimer          *m_timerGame;
-
     // определение матрицы полей
     void creatFieldMatrix();
 
     // отрисовка границ сцены
     void drawingSceneBoundaries();
 
-    // сотворяем змейке
-    void createSnake();
+
+    QGraphicsScene  *m_scene;
+    Snake           *m_snake;
+    QTimer          *m_timerRoom;
 };
 
 #endif // ROOMBASE_H

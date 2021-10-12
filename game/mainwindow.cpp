@@ -12,10 +12,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     this->resize(850,870);
     this->setFixedSize(850,870);
-
     configuringScene();
 
-    this->setWindowTitle(QString("Snake %1").arg(Helper::GAME_VERSION));
+    this->setWindowTitle(QString("Snake %1").arg(Base::GAME_VERSION));
     this->setWindowIcon(QIcon(":snake/head.png"));
 
     levelGenerator = new RoomGenerator(scene);

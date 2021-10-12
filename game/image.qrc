@@ -1,8 +1,23 @@
 <RCC>
     <qresource prefix="/snake">
-        <file>head.png</file>
-        <file>dot_direct.png</file>
-        <file>dot_angle.png</file>
-        <file>dot_tail.png</file>
+        <file>images/snake/head.png</file>
+			<file>images/snake/dot_angle_base.png</file>
+        <file>images/snake/dot_direct_base.png</file>
+        <file>images/snake/dot_tail_base.png</file>
+        <file>images/snake/snake_blood.png</file>
+        <file>images/snake/dot_angle_speed.png</file>
+        <file>images/snake/dot_direct_speed.png</file>
+        <file>images/snake/dot_tail_speed.png</file>
+    </qresource>
+    <qresource prefix="/apple">
+        <file>images/apple/apple.png</file>
+        <file>images/apple/apple_speed.png</file>
+    </qresource>
+    <qresource prefix="/background">
+        <file>images/background/grass.png</file>
+    </qresource>
+    <qresource prefix="/portal">
+        <file>images/portal/portal 1-1.png</file>
+        <file>images/portal/portal 1-2.png</file>
     </qresource>
 </RCC>
