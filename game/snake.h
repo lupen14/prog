@@ -11,6 +11,8 @@
 #include <QGraphicsScene>
 #include <QPainter>
 
+using namespace Helper;
+
 class Snake : public QObject, public QGraphicsItem
 {
     Q_OBJECT
@@ -18,13 +20,17 @@ public:
     Snake(QObject *parent = 0);
     ~Snake();
 
-    static int count_eaten_apples;
+    typeItem type() const;
+
+    static int               count_eaten_apples;
+    static const typeItem    TYPE = static_cast<typeItem>(ItemType::SNAKE);
 
 signals:
     void signal_gameOver();
 
 private slots:
     void slot_snakeTimer();
+    void slot_setSnakeSpeed(snakeSpeed __speed);
 
 protected:
     QRectF boundingRect() const;
@@ -41,7 +47,7 @@ private:
     void checkWall();
 
     // удлиняем тулвище
-    void addDot();
+    void addDot(const Mutagen &__mutagen);
 
     // движене змеи
     void move();
@@ -52,12 +58,17 @@ private:
     // конец игры
     void gameOver();
 
+    // записать скорость змейки
+    void setSnakeSpeed(snakeSpeed __speed);
+
+
     Movement::Direction     directionHead;
     QRect                   m_size;
     QList<QGraphicsItem *>  dots;
     QList<QPointF>          lastPos;
     char                    lastKey;
     QTimer                  *m_timer;
+    snakeSpeed              m_speed;
 };
 
 #endif // SNAKE_H

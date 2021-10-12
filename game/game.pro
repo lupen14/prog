@@ -20,6 +20,7 @@ SOURCES += \
     dot.cpp \
     main.cpp \
     mainwindow.cpp \
+    portal.cpp \
     roomBase.cpp \
     room_1_base.cpp \
     room_2_move_apple.cpp \
@@ -31,6 +32,7 @@ HEADERS += \
     dot.h \
     helper.h \
     mainwindow.h \
+    portal.h \
     roomBase.h \
     room_1_base.h \
     room_2_move_apple.h \

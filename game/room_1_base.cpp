@@ -8,7 +8,7 @@ Room_1_base::Room_1_base(QGraphicsScene *__scene) :
 
     createApple();
 
-    initGameTimer();
+    initTimerRoom();
 }
 
 Room_1_base::~Room_1_base()
