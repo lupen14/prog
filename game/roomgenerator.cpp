@@ -4,6 +4,7 @@ RoomGenerator::RoomGenerator(QGraphicsScene *__scene):
     m_scene(__scene)
 {
     startBaseLavel();
+    srand(static_cast<unsigned int>(time(0)));
 }
 
 RoomGenerator::~RoomGenerator()
@@ -12,9 +13,9 @@ RoomGenerator::~RoomGenerator()
 
 void RoomGenerator::startBaseLavel()
 {
-    room_1 = new Room_1_base(m_scene);
+    room_2 = new Room_2_move_apple(m_scene);
 
-    rooms.append(room_1);
+    rooms.append(room_2);
 
     connect(rooms.last(), &RoomBase::signal_roomCompleted, this, &RoomGenerator::slot_roomCompleted);
 }
