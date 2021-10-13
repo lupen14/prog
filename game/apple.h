@@ -25,11 +25,11 @@ public:
 
     // говорим яблоку, что оно должно двигаться
     void setMove(const bool& __move);
-    bool getMove();
+    inline bool getMove();
 
     // наделяют яблоко мутагеном
     void setMutagen(const Mutagen &__mutagen);
-    void setRandomMutagen();
+    inline void setRandomMutagen();
     Mutagen getMutagen();
 
     // возвращаем тип обьекта, чтобы его идентифицировать

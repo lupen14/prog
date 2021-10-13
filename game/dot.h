@@ -29,7 +29,7 @@ public:
 
     void printBload();
 
-    Mutagen getMutagen();
+    inline Mutagen getMutagen();
     void setMutagenNone();
     void setMutagenSpeed();
 
