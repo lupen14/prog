@@ -50,7 +50,7 @@ private:
     void addDot(const Mutagen &__mutagen);
 
     // движене змеи
-    void move();
+    inline void move();
 
     // столкновение с другими обьектами
     void collision();
