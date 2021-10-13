@@ -54,6 +54,7 @@ void Apple::dieTimer()
     m_timer->stop();
     disconnect(m_timer, &QTimer::timeout, this, &Apple::slot_appleTimer);
     delete m_timer;
+    m_timer = nullptr;
 }
 
 QRectF Apple::boundingRect() const

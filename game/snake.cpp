@@ -153,6 +153,7 @@ void Snake::collision()
                 addDot(apple->getMutagen());
                 this->scene()->removeItem(item);
                 delete item;
+                item = nullptr;
 
                 count_eaten_apples++;
 
@@ -165,8 +166,6 @@ void Snake::collision()
                 {
                     Dot *lastDot(static_cast<Dot*>(dots.last()));
                     lastDot->printBload();
-                    this->scene()->removeItem(lastDot);
-                    delete lastDot;
 
                     if (lastDot->getMutagen() == Mutagen::SPEED)
                     {
@@ -174,6 +173,10 @@ void Snake::collision()
                     }
 
                     dots.removeOne(lastDot);
+
+                    this->scene()->removeItem(lastDot);
+                    delete lastDot;
+                    lastDot = nullptr;
                 }
                 break;
             }
