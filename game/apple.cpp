@@ -1,7 +1,12 @@
 #include "apple.h"
 #include "roomBase.h"
 
-#include "QDebug"
+#include <QDebug>
+#include <algorithm>    // std::shuffle
+#include <vector>       // std::vector
+#include <random>       // std::default_random_engine
+#include <chrono>       // std::chrono::system_clock
+#include <vector>
 
 Apple::Apple(const QGraphicsScene *__scene) :
     QGraphicsItem(),
@@ -120,62 +125,55 @@ typeItem Apple::type() const
 void Apple::slot_appleTimer()
 {
     Movement::Direction direction;
-    QList<Movement::Direction> listDirection;
 
-    bool w = true;
-    do
-    {
-        if (listDirection.count() == 4)
-            break;
+    direction = checkObstacles();
 
-        direction = static_cast<Movement::Direction>(rand() % Movement::ALL);
-
-        if (listDirection.contains(direction))
-        {
-            w = true;
-        }
-        else
-        {
-            listDirection.append(direction);
-
-            w = checkObstacles(direction);
-        }
-    } while(w);
-
-    if (!w)
+    if (direction != Movement::ALL)
         move(direction);
 }
 
-bool Apple::checkObstacles(const Movement::Direction &__direction)
+Movement::Direction Apple::checkObstacles()
 {
+    static std::vector<Movement::Direction> directions {Movement::DOWN, Movement::UP, Movement::LEFT, Movement::RIGHT};
+
+    if (directions.size() == 0)
+        return Movement::ALL;
+
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::default_random_engine e(seed);
+
+    std::shuffle(directions.begin(), directions.end(), e);
+
+    Movement::Direction direction(directions.back());
+
     /// проверяем, есть ли по направлению куда хочет перемещаться яблоко стена или занята ли клетка каким-нибудь обьектом
-    switch (__direction)
+    switch (direction)
     {
         case Movement::DOWN:
         {
             if (this->y() + FIELD_SIZE > BORDER_MAX_Y || checkOutsiderItem(0, FIELD_SIZE))
-                return true;
+                return checkObstacles();
 
             break;
         }
         case Movement::UP:
         {
             if (this->y() - FIELD_SIZE < BORDER_MIN_Y || checkOutsiderItem(0, -FIELD_SIZE))
-                return true;
+                return checkObstacles();
 
             break;
         }
         case Movement::LEFT:
         {
             if (this->x() - FIELD_SIZE < BORDER_MIN_X || checkOutsiderItem(-FIELD_SIZE, 0))
-                return true;
+                return checkObstacles();
 
             break;
         }
         case Movement::RIGHT:
         {
             if (this->x() + FIELD_SIZE > BORDER_MAX_X || checkOutsiderItem(FIELD_SIZE, 0))
-                return true;
+                return checkObstacles();
 
             break;
         }
@@ -183,7 +181,9 @@ bool Apple::checkObstacles(const Movement::Direction &__direction)
             break;
     }
 
-    return false;
+    directions = {Movement::DOWN, Movement::UP, Movement::LEFT, Movement::RIGHT};
+
+    return direction;
 }
 
 bool Apple::checkOutsiderItem(const int &__x = 0, const int &__y = 0)

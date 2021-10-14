@@ -54,7 +54,7 @@ private:
     void dieTimer();
 
     // проверка преград перед перемещеним
-    bool checkObstacles(const Movement::Direction &__direction);
+    Movement::Direction checkObstacles();
 
     // проверка что куда хочет переместиться яблоко есть ли другой обьект
     bool checkOutsiderItem(const int &__x, const int &__y);
