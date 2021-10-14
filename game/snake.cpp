@@ -144,7 +144,7 @@ void Snake::checkWall()
 void Snake::collision()
 {        
     QList<QGraphicsItem *> list = this->collidingItems();
-    foreach(QGraphicsItem *item , list)
+    for(QGraphicsItem *item : list)
     {
         switch (item->type()) {
             case static_cast<typeItem>(ItemType::APPLE):
