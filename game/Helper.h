@@ -66,11 +66,11 @@ namespace Movement
 {
     enum Direction
     {
-        UP      = 0,
-        DOWN    = 1,
-        RIGHT   = 2,
-        LEFT    = 3,
-        ALL     = 4
+        NONE    = 0,
+        UP      = 1,
+        DOWN    = 2,
+        RIGHT   = 3,
+        LEFT    = 4
     };
 }
 

@@ -128,7 +128,7 @@ void Apple::slot_appleTimer()
 
     direction = checkObstacles();
 
-    if (direction != Movement::ALL)
+    if (direction != Movement::NONE)
         move(direction);
 }
 
@@ -137,7 +137,7 @@ Movement::Direction Apple::checkObstacles()
     static std::vector<Movement::Direction> directions {Movement::DOWN, Movement::UP, Movement::LEFT, Movement::RIGHT};
 
     if (directions.size() == 0)
-        return Movement::ALL;
+        return Movement::NONE;
 
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
     std::default_random_engine e(seed);
@@ -177,7 +177,7 @@ Movement::Direction Apple::checkObstacles()
 
             break;
         }
-        case Movement::ALL:
+        case Movement::NONE:
             break;
     }
 
@@ -223,7 +223,7 @@ void Apple::move(const Movement::Direction &__direction)
             this->setPos(mapToParent(FIELD_SIZE, 0));
             break;
         }
-        case Movement::ALL:
+        case Movement::NONE:
             break;
     }
 }
