@@ -23,7 +23,6 @@ public:
     static const QString s_imageAngleBase;
     static const QString s_imageTailBase;
 
-    static const typeItem TYPE = static_cast<typeItem>(ItemType::DOT);
     static typeItem s_count;
     typeItem type() const;
 
@@ -32,7 +31,6 @@ public:
     const Mutagen& getMutagen();
     void setMutagenNone();
     void setMutagenSpeed();
-
 
 signals:
     void signal_setSnakeSpeed(snakeSpeed __speed);
@@ -47,6 +45,7 @@ private:
     // рисуем обьект
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
+    const typeItem  m_type;
     QRect           m_size;
     QGraphicsItem  *m_frontItem;
     QPixmap         m_currDotPixmap;

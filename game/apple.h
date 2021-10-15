@@ -35,8 +35,6 @@ public:
     // возвращаем тип обьекта, чтобы его идентифицировать
     typeItem type() const;
 
-    static const typeItem TYPE = static_cast<typeItem>(ItemType::APPLE);
-
 signals:
     void signal_die(Apple*);
 
@@ -62,12 +60,14 @@ private:
     // движение яблока
     void move(const Movement::Direction &__direction);
 
-    QTimer  *m_timer;
-    QRect   m_size;
-    int     m_appleSpeedMove;
-    QPixmap m_pixmap;
-    bool    m_move;
-    Mutagen m_mutagen;
+
+    const typeItem  m_type;
+    QTimer          *m_timer;
+    QRect           m_size;
+    int             m_appleSpeedMove;
+    QPixmap         m_pixmap;
+    bool            m_move;
+    Mutagen         m_mutagen;
 };
 
 #endif // APPLE_H

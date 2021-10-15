@@ -10,6 +10,7 @@ int Snake::count_eaten_apples = 0;
 Snake::Snake(QObject *parent) :
     QObject(parent),
     QGraphicsItem(),
+    m_type(static_cast<typeItem>(ItemType::SNAKE)),
     m_size(-8, -8, 16, 16),
     m_speed(5)
 {
@@ -33,7 +34,7 @@ QRectF Snake::boundingRect() const
 
 int Snake::type() const
 {
-    return TYPE;
+    return m_type;
 }
 
 void Snake::initTimer()

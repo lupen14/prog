@@ -22,8 +22,7 @@ public:
 
     typeItem type() const;
 
-    static int               count_eaten_apples;
-    static const typeItem    TYPE = static_cast<typeItem>(ItemType::SNAKE);
+    static int count_eaten_apples;
 
 signals:
     void signal_gameOver();
@@ -62,6 +61,7 @@ private:
     void setSnakeSpeed(snakeSpeed __speed);
 
 
+    const typeItem          m_type;
     Movement::Direction     directionHead;
     QRect                   m_size;
     QList<QGraphicsItem *>  dots;

@@ -16,6 +16,7 @@ const QString Dot::s_imageTailSpeed     = ":snake/images/snake/dot_tail_speed.pn
 Dot::Dot(QGraphicsItem *__frontItem, QObject *parent) :
     QObject(parent),
     QGraphicsItem(),
+    m_type(static_cast<typeItem>(ItemType::DOT)),
     m_size(-8, -8, 16, 16),
     m_frontItem(__frontItem),
     m_dotDirect(s_imageDirectBase),
@@ -78,7 +79,7 @@ void Dot::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidg
 
 typeItem Dot::type() const
 {
-    return TYPE;
+    return m_type;
 }
 
 void Dot::printBload()

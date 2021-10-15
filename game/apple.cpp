@@ -10,6 +10,7 @@
 
 Apple::Apple(const QGraphicsScene *__scene) :
     QGraphicsItem(),
+    m_type(static_cast<typeItem>(ItemType::APPLE)),
     m_size(-8, -8, 16, 16),
     m_appleSpeedMove(1000),
     m_pixmap(":apple/images/apple/apple.png"),
@@ -119,7 +120,7 @@ const Mutagen& Apple::getMutagen()
 
 typeItem Apple::type() const
 {
-    return TYPE;
+    return m_type;
 }
 
 void Apple::slot_appleTimer()
