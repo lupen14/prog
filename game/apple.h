@@ -30,7 +30,7 @@ public:
     // наделяют яблоко мутагеном
     void setMutagen(const Mutagen &__mutagen);
     void setRandomMutagen();
-    Mutagen getMutagen();
+    const Mutagen &getMutagen();
 
     // возвращаем тип обьекта, чтобы его идентифицировать
     typeItem type() const;

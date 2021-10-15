@@ -1,7 +1,7 @@
 #include "snake.h"
 #include "roomBase.h"
 
-#include "QDebug"
+#include <QDebug>
 
 using namespace Base;
 
@@ -150,6 +150,8 @@ void Snake::collision()
             case static_cast<typeItem>(ItemType::APPLE):
             {
                 Apple *apple = static_cast<Apple*>(item);
+
+
                 addDot(apple->getMutagen());
                 this->scene()->removeItem(item);
                 delete item;
@@ -165,6 +167,8 @@ void Snake::collision()
                 while ( dots.lastIndexOf(item) > 0 )
                 {
                     Dot *lastDot(static_cast<Dot*>(dots.last()));
+
+
                     lastDot->printBload();
 
                     if (lastDot->getMutagen() == Mutagen::SPEED)

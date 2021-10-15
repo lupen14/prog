@@ -34,7 +34,7 @@ Dot::~Dot()
     emit signal_setSnakeSpeed(-1);
 }
 
-Mutagen Dot::getMutagen()
+const Mutagen& Dot::getMutagen()
 {
     return m_mutagen;
 }

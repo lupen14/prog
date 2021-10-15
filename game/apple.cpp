@@ -112,7 +112,7 @@ void Apple::setRandomMutagen()
     setMutagen(static_cast<Mutagen>(rand()%Mutagen::ALL));
 }
 
-Mutagen Apple::getMutagen()
+const Mutagen& Apple::getMutagen()
 {
     return m_mutagen;
 }
