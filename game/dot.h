@@ -28,7 +28,7 @@ public:
 
     void printBload();
 
-    const Mutagen& getMutagen();
+    const Mutagen &getMutagen();
     void setMutagenNone();
     void setMutagenSpeed();
 

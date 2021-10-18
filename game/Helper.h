@@ -1,6 +1,7 @@
 #ifndef HELPER_H
 #define HELPER_H
 
+// c с++ 11 typedef не использовтаь, лучше type alias (using name = type)
 using typeItem = int;
 
 namespace Helper
