@@ -10,7 +10,7 @@ int Snake::count_eaten_apples = 0;
 Snake::Snake(QObject *parent) :
     QObject(parent),
     QGraphicsItem(),
-    m_type(static_cast<typeItem>(ItemType::SNAKE)),
+    m_type(static_cast<itemType>(ItemType::SNAKE)),
     m_size(-8, -8, 16, 16),
     m_speed(5)
 {
@@ -148,31 +148,29 @@ void Snake::collision()
     for(QGraphicsItem *item : list)
     {
         switch (item->type()) {
-            case static_cast<typeItem>(ItemType::APPLE):
+            case static_cast<itemType>(ItemType::APPLE):
             {
                 Apple *apple = static_cast<Apple*>(item);
 
-
-                addDot(apple->getMutagen());
-                this->scene()->removeItem(item);
-                delete item;
-                item = nullptr;
+                addDot(*apple);
+                this->scene()->removeItem(apple);
+                delete apple;
+                apple = nullptr;
 
                 count_eaten_apples++;
 
                 break;
             }
-            case static_cast<typeItem>(ItemType::DOT):
+            case static_cast<itemType>(ItemType::DOT):
             {
                 /// удаляем тело до тех пор пока не удлим с тем с котом столкнулись
                 while ( dots.lastIndexOf(item) > 0 )
                 {
                     Dot *lastDot(static_cast<Dot*>(dots.last()));
 
-
                     lastDot->printBload();
 
-                    if (lastDot->getMutagen() == Mutagen::SPEED)
+                    if (*lastDot == Mutagen::SPEED)
                     {
                         disconnect(lastDot, &Dot::signal_setSnakeSpeed, this, &Snake::slot_setSnakeSpeed);
                     }

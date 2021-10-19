@@ -23,14 +23,18 @@ public:
     static const QString s_imageAngleBase;
     static const QString s_imageTailBase;
 
-    static typeItem s_count;
-    typeItem type() const;
+    static itemType s_count;
+    itemType type() const;
 
     void printBload();
 
-    const Mutagen &getMutagen();
     void setMutagenNone();
     void setMutagenSpeed();
+
+    inline friend bool operator== (const Dot &__dot, const Mutagen &__mutagen2)
+    {
+        return __dot.m_mutagen == __mutagen2;
+    }
 
 signals:
     void signal_setSnakeSpeed(snakeSpeed __speed);
@@ -45,7 +49,7 @@ private:
     // рисуем обьект
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
-    const typeItem  m_type;
+    const itemType  m_type;
     QRect           m_size;
     QGraphicsItem  *m_frontItem;
     QPixmap         m_currDotPixmap;

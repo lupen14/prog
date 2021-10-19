@@ -30,10 +30,11 @@ public:
     // наделяют яблоко мутагеном
     void setMutagen(const Mutagen &__mutagen);
     void setRandomMutagen();
-    const Mutagen &getMutagen();
+
+    inline operator const Mutagen&() { return m_mutagen; }
 
     // возвращаем тип обьекта, чтобы его идентифицировать
-    typeItem type() const;
+    itemType type() const;
 
 signals:
     void signal_die(Apple*);
@@ -61,7 +62,7 @@ private:
     void move(const Movement::Direction &__direction);
 
 
-    const typeItem  m_type;
+    const itemType  m_type;
     QTimer          *m_timer;
     QRect           m_size;
     int             m_appleSpeedMove;

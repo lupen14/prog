@@ -20,7 +20,7 @@ public:
     Snake(QObject *parent = 0);
     ~Snake();
 
-    typeItem type() const;
+    itemType type() const;
 
     static int count_eaten_apples;
 
@@ -61,7 +61,7 @@ private:
     void setSnakeSpeed(snakeSpeed __speed);
 
 
-    const typeItem          m_type;
+    const itemType          m_type;
     Movement::Direction     directionHead;
     QRect                   m_size;
     QList<QGraphicsItem *>  dots;

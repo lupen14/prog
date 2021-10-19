@@ -16,7 +16,7 @@ const QString Dot::s_imageTailSpeed     = ":snake/images/snake/dot_tail_speed.pn
 Dot::Dot(QGraphicsItem *__frontItem, QObject *parent) :
     QObject(parent),
     QGraphicsItem(),
-    m_type(static_cast<typeItem>(ItemType::DOT)),
+    m_type(static_cast<itemType>(ItemType::DOT)),
     m_size(-8, -8, 16, 16),
     m_frontItem(__frontItem),
     m_dotDirect(s_imageDirectBase),
@@ -33,11 +33,6 @@ Dot::~Dot()
 {
     --s_count;
     emit signal_setSnakeSpeed(-1);
-}
-
-const Mutagen& Dot::getMutagen()
-{
-    return m_mutagen;
 }
 
 void Dot::setMutagenNone()
@@ -60,6 +55,7 @@ void Dot::setMutagenSpeed()
     emit signal_setSnakeSpeed(1);
 }
 
+
 QRectF Dot::boundingRect() const
 {
     return m_size;
@@ -77,7 +73,7 @@ void Dot::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidg
     Q_UNUSED(option); Q_UNUSED(widget);
 }
 
-typeItem Dot::type() const
+itemType Dot::type() const
 {
     return m_type;
 }

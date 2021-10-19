@@ -2,7 +2,7 @@
 #define HELPER_H
 
 // c с++ 11 typedef не использовтаь, лучше type alias (using name = type)
-using typeItem = int;
+using itemType = int;
 
 namespace Helper
 {

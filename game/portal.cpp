@@ -62,7 +62,7 @@ bool Portal::collision()
     foreach(QGraphicsItem *item , list)
     {
         switch (item->type()) {
-            case static_cast<typeItem>(ItemType::SNAKE):
+            case static_cast<itemType>(ItemType::SNAKE):
             {
                 return true;
                 break;

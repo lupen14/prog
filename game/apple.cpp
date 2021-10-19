@@ -10,7 +10,7 @@
 
 Apple::Apple(const QGraphicsScene *__scene) :
     QGraphicsItem(),
-    m_type(static_cast<typeItem>(ItemType::APPLE)),
+    m_type(static_cast<itemType>(ItemType::APPLE)),
     m_size(-8, -8, 16, 16),
     m_appleSpeedMove(1000),
     m_pixmap(":apple/images/apple/apple.png"),
@@ -113,12 +113,7 @@ void Apple::setRandomMutagen()
     setMutagen(static_cast<Mutagen>(rand()%Mutagen::ALL));
 }
 
-const Mutagen& Apple::getMutagen()
-{
-    return m_mutagen;
-}
-
-typeItem Apple::type() const
+itemType Apple::type() const
 {
     return m_type;
 }
